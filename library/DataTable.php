@@ -13,9 +13,12 @@ class DataTable
 		'dom'
 	);
 
+	protected $_data;
+
+	protected $_name;
+
 	protected $_type;
 
-	protected $_data;
 
 	public function __construct(array $config = array())
 	{
@@ -32,6 +35,11 @@ class DataTable
 
 		$this->_type = $sourceType;
 		$this->_data = $sourceData;
+	}
+
+	public function setName($name)
+	{
+		$this->_name = $name;
 	}
 
 	public function render()
