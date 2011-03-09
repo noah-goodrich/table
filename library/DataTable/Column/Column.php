@@ -12,6 +12,8 @@ use DataTable\Value as Value;
 
 abstract class Column implements iColumn {
 
+	protected $_valueObj;
+
 	protected $_value;
 
 	protected $_header;
@@ -20,6 +22,8 @@ abstract class Column implements iColumn {
 
 	public function __construct(array $config)
 	{
+		$this->_valueObj = new Value;
+		
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'value':
@@ -37,12 +41,16 @@ abstract class Column implements iColumn {
 
 	public function value($object)
 	{
-		return Value($this->_value, $object);
+		$meth = $this->_valueObj;
+
+		return $meth($this->_value, $object);
 	}
 
 	public function classes($object)
 	{
-		$return = Value($this->_classes, $object);
+		$meth = $this->_valueObj;
+
+		$return = $meth($this->_classes, $object);
 
 		if(!is_array($return)) {
 			$return = array($return);
@@ -53,6 +61,20 @@ abstract class Column implements iColumn {
 
 	public function header()
 	{
-		return Value($this->_header, func_get_args());
+		$meth = $this->_valueObj;
+
+		return $meth($this->_header, func_get_args());
+	}
+
+	public function render($object)
+	{
+		$file = get_class($this);
+		$file = explode("\\", $file);
+
+		unset($file[0]);
+
+		$file = 'views/'.strtolower(join("/", $file)).'.php';
+		
+		require $file;
 	}
 }

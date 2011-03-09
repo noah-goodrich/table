@@ -60,6 +60,8 @@ class DataTable
 		$class = "\\DataTable\\Column\\".ucfirst($type);
 
 		$this->_columns[$array['name']] = new $class($array);
+
+		return $this;
 	}
 
 	public function addColumns(array $array)
@@ -69,16 +71,20 @@ class DataTable
 
 			$this->addColumn($config);
 		}
+
+		return $this;
 	}
 
 	public function render()
 	{
-		
+		 require 'views/dom.php';
 	}
 
 	public function setBaseUrl($url)
 	{
 		$this->_baseUrl = $url;
+
+		return $this;
 	}
 
 	public function setDataSource($sourceType, $sourceData)
@@ -89,10 +95,14 @@ class DataTable
 
 		$this->_type = $sourceType;
 		$this->_data = $sourceData;
+
+		return $this;
 	}
 
 	public function setName($name)
 	{
 		$this->_name = $name;
+
+		return $this;
 	}
 }

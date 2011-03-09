@@ -6,20 +6,20 @@
  * 
  */
  ?>
- 
-<table id="<?= $name ?>">
+
+<table id="<?= $this->_name ?>">
 	<thead>
 	<tr>
-	<? foreach($columns as $column): ?>
+	<? foreach($this->_columns as $column): ?>
 		<th><?= $column->header() ?></th>
 	<? endforeach; ?>
 	</tr>
 	</thead>
 	<tbody>
-	<? foreach($data as $tuple): ?>
+	<? foreach($this->_data as $tuple): ?>
 	<tr>
-	<? foreach($columns as $column): ?>
-		<td></td>
+	<? foreach($this->_columns as $column): ?>
+		<td><?= $column->render($tuple) ?></td>
 	<? endforeach; ?>
 	</tr>
 	<? endforeach; ?>
@@ -28,6 +28,6 @@
 
 <script>
 $(document).ready(function() {
-	$('#<?= $name ?>').dataTable();
+	$('#<?= $this->_name ?>').dataTable();
 });
 </script>

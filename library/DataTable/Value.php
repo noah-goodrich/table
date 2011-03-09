@@ -12,11 +12,7 @@ class Value {
 
 	public function __invoke($determiner, $obj)
 	{
-		if (is_scalar($determiner)) {
-			return $determiner;
-		}
-
-		if (is_callable($determiner)) {
+		if (!is_callable($determiner)) {
 			return $determiner;
 		}
 
