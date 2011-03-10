@@ -20,6 +20,10 @@ class Anchor extends Column {
 		parent::__construct($config);
 	}
 
+	/**
+	 * @param  $object
+	 * @return string
+	 */
 	public function url($object)
 	{
 		$meth = $this->_valueObj;

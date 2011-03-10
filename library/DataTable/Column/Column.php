@@ -39,6 +39,10 @@ abstract class Column implements iColumn {
 		}
 	}
 
+	/**
+	 * @param  $object
+	 * @return string
+	 */
 	public function value($object)
 	{
 		$meth = $this->_valueObj;
@@ -46,6 +50,10 @@ abstract class Column implements iColumn {
 		return $meth($this->_value, $object);
 	}
 
+	/**
+	 * @param  $object
+	 * @return string
+	 */
 	public function classes($object)
 	{
 		$meth = $this->_valueObj;
@@ -59,6 +67,9 @@ abstract class Column implements iColumn {
 		return join(" ", $return);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function header()
 	{
 		$meth = $this->_valueObj;
@@ -66,6 +77,10 @@ abstract class Column implements iColumn {
 		return $meth($this->_header, func_get_args());
 	}
 
+	/**
+	 * @param  $object
+	 * @return void
+	 */
 	public function render($object)
 	{
 		$file = get_class($this);

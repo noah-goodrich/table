@@ -49,6 +49,9 @@ class DataTable
 		
 	}
 
+	/**
+	 * @return array
+	 */
 	public function actions()
 	{
 		$_columns = $this->_columns;
@@ -62,6 +65,10 @@ class DataTable
 		return $_columns;
 	}
 
+	/**
+	 * @param array $array
+	 * @return DataTable
+	 */
 	public function addColumn(array $array)
 	{
 		if(!isset($array['type'])) {
@@ -84,6 +91,10 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @param array $array
+	 * @return DataTable
+	 */
 	public function addColumns(array $array)
 	{
 		foreach($array as $name => $config) {
@@ -95,6 +106,9 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function columns()
 	{
 		$_columns = $this->_columns;
@@ -108,11 +122,18 @@ class DataTable
 		return $_columns;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function render()
 	{
 		 require 'views/dom.php';
 	}
 
+	/**
+	 * @param  $url
+	 * @return DataTable
+	 */
 	public function setBaseUrl($url)
 	{
 		$this->_baseUrl = $url;
@@ -120,6 +141,12 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @throws Exception
+	 * @param  $sourceType
+	 * @param  $sourceData
+	 * @return DataTable
+	 */
 	public function setDataSource($sourceType, $sourceData)
 	{
 		if(!in_array($sourceType, self::$_types)) {
@@ -132,6 +159,10 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @param  $name
+	 * @return DataTable
+	 */
 	public function setName($name)
 	{
 		$this->_name = $name;

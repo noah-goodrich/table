@@ -10,5 +10,10 @@ namespace DataTable\Column;
 
 interface iColumn {
 
+	/**
+	 * @abstract
+	 * @param  $object
+	 * @return void
+	 */
 	public function render($object);
 }
