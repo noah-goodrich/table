@@ -14,10 +14,16 @@ class Anchor extends Column {
 	public function __construct(array $config)
 	{
 		$this->_url = $config['url'];
+
+		unset($config['url']);
+
+		parent::__construct($config);
 	}
 
 	public function url($object)
 	{
-		return Value($this->_url, $object);
+		$meth = $this->_valueObj;
+
+		return $meth($this->_url, $object);
 	}
 }

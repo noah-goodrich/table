@@ -27,6 +27,8 @@ class DataTable
 
 	protected $_name;
 
+	protected $_actionCount = 0;
+
 	protected $_type;
 
 	public function __construct(array $config = array())
@@ -47,6 +49,19 @@ class DataTable
 		
 	}
 
+	public function actions()
+	{
+		$_columns = $this->_columns;
+
+		foreach($_columns as $key => $val) {
+			if(!stristr($key, 'action')) {
+				unset($_columns[$key]);
+			}
+		}
+
+		return $_columns;
+	}
+
 	public function addColumn(array $array)
 	{
 		if(!isset($array['type'])) {
@@ -59,7 +74,12 @@ class DataTable
 
 		$class = "\\DataTable\\Column\\".ucfirst($type);
 
-		$this->_columns[$array['name']] = new $class($array);
+		if(isset($array['name']) && isset($array['header'])) {
+			$this->_columns[$array['name']] = new $class($array);
+		} else {
+			$this->_columns['action'.$this->_actionCount++] = new $class($array);
+		}
+
 
 		return $this;
 	}
@@ -73,6 +93,19 @@ class DataTable
 		}
 
 		return $this;
+	}
+
+	public function columns()
+	{
+		$_columns = $this->_columns;
+
+		foreach($_columns as $key => $val) {
+			if(stristr($key, 'action')) {
+				unset($_columns[$key]);
+			}
+		}
+
+		return $_columns;
 	}
 
 	public function render()

@@ -6,5 +6,5 @@
  * 
  */
  ?>
- 
-<a href="<?= $column->anchor($object) ?>" class="<?= $column->classes($object) ?>"><?= $column->value($object) ?></a>
+
+<a href="<?= $this->url($object) ?>" class="<?= $this->classes($object) ?>"><?= $this->value($object) ?></a>

@@ -12,7 +12,7 @@ class Value {
 
 	public function __invoke($determiner, $obj)
 	{
-		if (!is_callable($determiner)) {
+		if (empty($determiner) || !is_callable($determiner)) {
 			return $determiner;
 		}
 
