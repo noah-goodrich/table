@@ -10,17 +10,27 @@
 <table id="<?= $this->_name ?>">
 	<thead>
 	<tr>
-	<? foreach($this->_columns as $column): ?>
+	<? foreach($this->columns() as $column): ?>
 		<th><?= $column->header() ?></th>
 	<? endforeach; ?>
+	<? if(count($this->actions())): ?>
+		<th>Options</th>
+	<? endif; ?>
 	</tr>
 	</thead>
 	<tbody>
 	<? foreach($this->_data as $tuple): ?>
 	<tr>
-	<? foreach($this->_columns as $column): ?>
+	<? foreach($this->columns() as $column): ?>
 		<td><?= $column->render($tuple) ?></td>
 	<? endforeach; ?>
+	<? if(count($this->actions())): ?>
+		<td>
+		<? foreach($this->actions() as $option): ?>
+			<?= $option->render($tuple) ?>
+		<? endforeach ?>
+		</td>
+	<? endif; ?>
 	</tr>
 	<? endforeach; ?>
 	</tbody>

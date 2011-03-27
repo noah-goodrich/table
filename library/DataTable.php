@@ -29,6 +29,8 @@ class DataTable
 
 	protected $_name;
 
+	protected $_actionCount = 0;
+
 	protected $_type;
 
 	public static function autoload($class)
@@ -87,6 +89,26 @@ class DataTable
 		
 	}
 
+	/**
+	 * @return array
+	 */
+	public function actions()
+	{
+		$_columns = $this->_columns;
+
+		foreach($_columns as $key => $val) {
+			if(!stristr($key, 'action')) {
+				unset($_columns[$key]);
+			}
+		}
+
+		return $_columns;
+	}
+
+	/**
+	 * @param array $array
+	 * @return DataTable
+	 */
 	public function addColumn(array $array)
 	{
 		if(!isset($array['type'])) {
@@ -99,11 +121,20 @@ class DataTable
 
 		$class = "\\DataTable\\Column\\".ucfirst($type);
 
-		$this->_columns[$array['name']] = new $class($array);
+		if(isset($array['name']) && isset($array['header'])) {
+			$this->_columns[$array['name']] = new $class($array);
+		} else {
+			$this->_columns['action'.$this->_actionCount++] = new $class($array);
+		}
+
 
 		return $this;
 	}
 
+	/**
+	 * @param array $array
+	 * @return DataTable
+	 */
 	public function addColumns(array $array)
 	{
 		foreach($array as $name => $config) {
@@ -115,11 +146,34 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function columns()
+	{
+		$_columns = $this->_columns;
+
+		foreach($_columns as $key => $val) {
+			if(stristr($key, 'action')) {
+				unset($_columns[$key]);
+			}
+		}
+
+		return $_columns;
+	}
+
+	/**
+	 * @return void
+	 */
 	public function render()
 	{
 		 require 'views/dom.php';
 	}
 
+	/**
+	 * @param  $url
+	 * @return DataTable
+	 */
 	public function setBaseUrl($url)
 	{
 		$this->_baseUrl = $url;
@@ -127,6 +181,12 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @throws Exception
+	 * @param  $sourceType
+	 * @param  $sourceData
+	 * @return DataTable
+	 */
 	public function setDataSource($sourceType, $sourceData)
 	{
 		if(!in_array($sourceType, self::$_types)) {
@@ -139,6 +199,10 @@ class DataTable
 		return $this;
 	}
 
+	/**
+	 * @param  $name
+	 * @return DataTable
+	 */
 	public function setName($name)
 	{
 		$this->_name = $name;
