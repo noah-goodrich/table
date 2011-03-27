@@ -19,6 +19,8 @@ class DataTable
 		'delete'
 	);
 
+	protected static $_namespaces = array();
+
 	protected $_actions = array();
 
 	protected $_columns = array();
@@ -28,6 +30,44 @@ class DataTable
 	protected $_name;
 
 	protected $_type;
+
+	public static function autoload($class)
+	{
+		if(!count(self::$_namespaces)) {
+			self::registerNamespace('DataTable', __DIR__);
+		}
+		
+        $parts = explode("\\", $class);
+
+        if(isset(self::$_namespaces[$parts[0]])) {
+            $file = self::$_namespaces[$parts[0]].str_replace("\\", "/", $class).'.php';
+            if(file_exists($file) && is_readable($file)) {
+                require $file;
+                return $class;
+            }
+        } else {
+            $namespaces = array_reverse(self::$_namespaces);
+            foreach ($namespaces as $ns => $path) {
+                $file = $path.$ns.str_replace("\\", "/", $class).'.php';
+
+                if(file_exists($file) && is_readable($file)) {
+                    require $file;
+                    return $ns . $class;
+                }
+            }
+        }
+
+        return false;
+	}
+
+	public static function registerNamespace($ns, $path)
+	{
+		if(substr($path, -1, 1) != '/') {
+			$path .= '/';
+		}
+
+		self::$_namespaces[$ns] = $path;
+	}
 
 	public function __construct(array $config = array())
 	{
