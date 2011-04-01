@@ -88,7 +88,7 @@ abstract class Column implements iColumn {
 
 		unset($file[0]);
 
-		$file = 'views/'.strtolower(join("/", $file)).'.php';
+		$file = dirname(dirname(__DIR__)).'/views/'.strtolower(join("/", $file)).'.php';
 		
 		require $file;
 	}
