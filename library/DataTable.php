@@ -6,8 +6,8 @@
  * 
 */
 
-class DataTable
-{
+class DataTable {
+
 	protected static $_types = array(
 		'server-side',
 		'dom'
