@@ -13,15 +13,13 @@ class DataTable {
 		'dom'
 	);
 
-	protected static $_availableActions = array(
-		'add',
-		'edit',
-		'delete'
-	);
-
 	protected static $_namespaces = array();
 
 	protected $_actions = array();
+
+	protected $_add = array();
+
+	protected $_baseUrl;
 
 	protected $_columns = array();
 
@@ -118,7 +116,8 @@ class DataTable {
 		}
 
 		unset($array['type']);
-
+		$array['baseUrl'] = $this->_baseUrl;
+		
 		$class = "\\DataTable\\Column\\".ucfirst($type);
 
 		if(isset($array['name']) && isset($array['header'])) {
@@ -162,12 +161,19 @@ class DataTable {
 		return $_columns;
 	}
 
+	public function registerAdd(array $config)
+	{
+		$this->_add = $config;
+
+		return $this;
+	}
+
 	/**
 	 * @return void
 	 */
 	public function render()
 	{
-		 require 'views/dom.php';
+		 require 'views/'.$this->_type.'.php';
 	}
 
 	/**
@@ -176,6 +182,11 @@ class DataTable {
 	 */
 	public function setBaseUrl($url)
 	{
+		if(substr($url, -1) != '/')
+		{
+			$url .= '/';
+		}
+		
 		$this->_baseUrl = $url;
 
 		return $this;

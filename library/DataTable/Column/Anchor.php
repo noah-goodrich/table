@@ -28,6 +28,6 @@ class Anchor extends Column {
 	{
 		$meth = $this->_valueObj;
 
-		return $meth($this->_url, $object);
+		return $this->_baseUrl.$meth($this->_url, $object);
 	}
 }

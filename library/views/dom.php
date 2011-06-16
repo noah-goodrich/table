@@ -7,6 +7,12 @@
  */
  ?>
 
+<? if(!empty($this->_add)): ?>
+	<a href="<?= $this->_baseUrl.''.$this->_add['url']?>" class="<?= join(' ', $this->_add['classes']); ?>">
+		<span><?= $this->_add['label'] ?></span>
+	</a>
+<? endif; ?>
+
 <table id="<?= $this->_name ?>">
 	<thead>
 	<tr>

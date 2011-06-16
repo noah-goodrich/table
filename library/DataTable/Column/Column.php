@@ -12,6 +12,8 @@ use DataTable\Value as Value;
 
 abstract class Column implements iColumn {
 
+	protected $_baseUrl;
+	
 	protected $_valueObj;
 
 	protected $_value;
@@ -34,6 +36,9 @@ abstract class Column implements iColumn {
 					break;
 				case 'classes':
 					$this->_classes = $v;
+					break;
+				case 'baseUrl':
+					$this->_baseUrl = $v;
 					break;
 			}
 		}
