@@ -82,6 +82,9 @@ class DataTable {
 				case 'baseUrl':
 					$this->setBaseUrl($v);
 					break;
+				case 'columns':
+					$this->addColumns($v);
+					break;
 			}
 		}
 		
@@ -163,6 +166,10 @@ class DataTable {
 
 	public function registerAdd(array $config)
 	{
+		if(!isset($config['classes'])) {
+			$config['classes'] = array();
+		}
+		
 		$this->_add = $config;
 
 		return $this;
