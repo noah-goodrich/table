@@ -31,34 +31,68 @@ class DataTable {
 
 	protected $_type;
 
-	public static function autoload($class)
-	{
-		if(!count(self::$_namespaces)) {
-			self::registerNamespace('DataTable', __DIR__);
+		/**
+	 * @param  $file
+	 * @return bool
+	 */
+    protected static function _findFile($file)
+    {
+        return file_exists($file) && is_readable($file);
+    }
+
+	/**
+	 * @param  string $class
+	 * @return bool|string
+	 */
+    public static function autoload($class)
+    {
+ 		if(!count(self::$_namespaces)) {
+			self::registerNamespace('DataTable', __DIR__.'/DataTable/');
 		}
 		
         $parts = explode("\\", $class);
 
         if(isset(self::$_namespaces[$parts[0]])) {
-            $file = self::$_namespaces[$parts[0]].str_replace("\\", "/", $class).'.php';
-            if(file_exists($file) && is_readable($file)) {
-                require $file;
-                return $class;
-            }
+        	if(class_exists($class)) {
+				return $class;
+			} else {
+				$path = $parts;
+				unset($path[0]);
+
+				$path = join('/', $path);
+
+				$file = self::$_namespaces[$parts[0]].$path.'.php';
+				if(self::_findFile($file)) {
+					require $file;
+					return $class;
+				}
+			}
         } else {
             $namespaces = array_reverse(self::$_namespaces);
             foreach ($namespaces as $ns => $path) {
-                $file = $path.$ns.str_replace("\\", "/", $class).'.php';
+            	if(substr($class, 0, 1) == '\\') {
+            		$tmp = substr($class, 1);
+            	} else {
+					$tmp = $class;
+            	}
 
-                if(file_exists($file) && is_readable($file)) {
-                    require $file;
-                    return $ns . $class;
+                $file = $path.str_replace("\\", "/", $tmp).'.php';
+
+                if(self::_findFile($file)) {
+                	$class = $ns.$class;
+
+                	if(class_exists($class)) {
+                		return $class;
+                	} else {
+                		require $file;
+                    	return $class;
+                	}
                 }
             }
         }
 
         return false;
-	}
+    }
 
 	public static function registerNamespace($ns, $path)
 	{
