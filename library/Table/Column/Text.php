@@ -6,7 +6,7 @@
  * 
 */
 
-namespace DataTable\Column;
+namespace Table\Column;
 
 class Text extends Column {
 	

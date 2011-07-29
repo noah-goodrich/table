@@ -6,7 +6,7 @@
  * 
 */
 
-namespace DataTable;
+namespace Table;
 
 class Value {
 

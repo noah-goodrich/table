@@ -5,7 +5,7 @@
  * @brief Anchor Columns output an <a href=""></a> 
 */
 
-namespace DataTable\Column;
+namespace Table\Column;
 
 class Anchor extends Column {
 

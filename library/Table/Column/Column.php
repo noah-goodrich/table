@@ -6,9 +6,9 @@
  * 
 */
 
-namespace DataTable\Column;
+namespace Table\Column;
 
-use DataTable\Value as Value;
+use Table\Value as Value;
 
 abstract class Column implements iColumn {
 

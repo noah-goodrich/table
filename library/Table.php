@@ -6,7 +6,7 @@
  * 
 */
 
-class DataTable {
+class Table {
 
 	protected static $_types = array(
 		'server-side',
@@ -47,7 +47,7 @@ class DataTable {
     public static function autoload($class)
     {
  		if(!count(self::$_namespaces)) {
-			self::registerNamespace('DataTable', __DIR__.'/DataTable/');
+			self::registerNamespace('Table', __DIR__.'/Table/');
 		}
 		
         $parts = explode("\\", $class);
@@ -155,7 +155,7 @@ class DataTable {
 		unset($array['type']);
 		$array['baseUrl'] = $this->_baseUrl;
 		
-		$class = "\\DataTable\\Column\\".ucfirst($type);
+		$class = "\\Table\\Column\\".ucfirst($type);
 
 		if(isset($array['name']) && isset($array['header'])) {
 			$this->_columns[$array['name']] = new $class($array);
