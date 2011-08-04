@@ -214,7 +214,7 @@ class Table {
 	 */
 	public function render()
 	{
-		 require 'views/'.$this->_type.'.php';
+		 require __DIR__.'/views/'.$this->_type.'.php';
 	}
 
 	/**

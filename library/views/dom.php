@@ -13,7 +13,7 @@
 	</a>
 <? endif; ?>
 
-<table id="<?= $this->_name ?>">
+<table id="<?= $this->_name ?>" class="display">
 	<thead>
 	<tr>
 	<? foreach($this->columns() as $column): ?>
