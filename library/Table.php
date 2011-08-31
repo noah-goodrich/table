@@ -142,7 +142,7 @@ class Table {
 
 	/**
 	 * @param array $array
-	 * @return DataTable
+	 * @return Table
 	 */
 	public function addColumn(array $array)
 	{
@@ -169,7 +169,7 @@ class Table {
 
 	/**
 	 * @param array $array
-	 * @return DataTable
+	 * @return Table
 	 */
 	public function addColumns(array $array)
 	{
@@ -198,6 +198,10 @@ class Table {
 		return $_columns;
 	}
 
+	/**
+	 * @param array $config
+	 * @return Table
+	 */
 	public function registerAdd(array $config)
 	{
 		if(!isset($config['classes'])) {
@@ -219,7 +223,7 @@ class Table {
 
 	/**
 	 * @param  $url
-	 * @return DataTable
+	 * @return Table
 	 */
 	public function setBaseUrl($url)
 	{
@@ -237,7 +241,7 @@ class Table {
 	 * @throws Exception
 	 * @param  $sourceType
 	 * @param  $sourceData
-	 * @return DataTable
+	 * @return Table
 	 */
 	public function setDataSource($sourceType, $sourceData)
 	{
@@ -253,7 +257,7 @@ class Table {
 
 	/**
 	 * @param  $name
-	 * @return DataTable
+	 * @return Table
 	 */
 	public function setName($name)
 	{
