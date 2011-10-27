@@ -7,7 +7,7 @@
  */
  ?>
 
-<table id="<?= $this->_attr['id'] ?>" class="display">
+<table <?= $tbl_attr ?>>
 	<thead>
 	<tr>
 	<? foreach($this->_columns as $column): ?>

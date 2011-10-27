@@ -20,7 +20,7 @@ class Table {
 	protected $_add = array();
 	
 	protected $_attr = array(
-		'class' => array('display'),
+		'class' => 'display',
 		'id' => 'table'
 	);
 	
@@ -157,9 +157,16 @@ class Table {
 		return $this;
 	}
 
-	public function attr()
+	public function attr($attr, $value)
 	{
+		if($attr == 'class' && is_array($value))
+		{
+			$value = join(' ', $value);
+		}
 		
+		$this->_attr[$attr] = $value;
+		
+		return $this;
 	}
 
 	/**
@@ -167,7 +174,13 @@ class Table {
 	 */
 	public function render()
 	{
-		 require __DIR__.'/views/'.$this->_type.'.php';
+		$tbl_attr = '';
+		
+		foreach($this->_attr as $attr => $val) {
+			$tbl_attr .= $attr.'="'.$val.'" ';	
+		}
+		
+		require __DIR__.'/views/'.$this->_type.'.php';
 	}
 
 	/**
