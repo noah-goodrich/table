@@ -123,9 +123,6 @@ class Table {
 				case 'id':
 					$this->attr('id', $v);
 					break;
-				case 'baseUrl':
-					$this->setBaseUrl($v);
-					break;
 				case 'columns':
 					$this->add($v);
 					break;
@@ -168,6 +165,17 @@ class Table {
 		
 		return $this;
 	}
+	
+	/**
+	 * @param $id
+	 * @param $args
+	 */
+	public function js($id = 'table', array $args = array())
+	{
+		$args = json_encode($args);
+		
+		return '<script language="Javascript" type="javascript">$(document).ready(function() { $(\'#'.$id.'\').dataTable('.$args.'); });</script>';
+	}
 
 	/**
 	 * @return void
@@ -181,22 +189,6 @@ class Table {
 		}
 		
 		require __DIR__.'/views/'.$this->_type.'.php';
-	}
-
-	/**
-	 * @param  $url
-	 * @return Table
-	 */
-	public function setBaseUrl($url)
-	{
-		if(substr($url, -1) != '/')
-		{
-			$url .= '/';
-		}
-		
-		$this->_baseUrl = $url;
-
-		return $this;
 	}
 
 	/**

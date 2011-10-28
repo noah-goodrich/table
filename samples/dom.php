@@ -25,3 +25,5 @@ $table->add(
 	->setDataSource($rows);
 	
 echo $table->render();
+
+echo $table->js();
