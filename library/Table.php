@@ -9,7 +9,7 @@
 class Table {
 
 	protected static $_types = array(
-		'server-side',
+		'ajax',
 		'dom'
 	);
 
@@ -18,7 +18,17 @@ class Table {
 	protected $_actions = array();
 
 	protected $_add = array();
-
+	
+	protected $_attr = array(
+		'class' => 'display',
+		'id' => 'table'
+	);
+	
+	protected $_rowAttr = array(
+		'class' => null,
+		'id' => null
+	);
+	
 	protected $_baseUrl;
 
 	protected $_columns = array();
@@ -108,16 +118,16 @@ class Table {
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'type':
-					$this->setDataSource($v, $config['data']);
+					$this->setDataSource($config['data'], $v);
 					break;
-				case 'name':
-					$this->setName($v);
+				case 'id':
+					$this->attr('id', $v);
 					break;
 				case 'baseUrl':
 					$this->setBaseUrl($v);
 					break;
 				case 'columns':
-					$this->addColumns($v);
+					$this->add($v);
 					break;
 			}
 		}
@@ -125,91 +135,37 @@ class Table {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function actions()
-	{
-		$_columns = $this->_columns;
-
-		foreach($_columns as $key => $val) {
-			if(!stristr($key, 'action')) {
-				unset($_columns[$key]);
-			}
-		}
-
-		return $_columns;
-	}
-
-	/**
 	 * @param array $array
 	 * @return Table
 	 */
-	public function addColumn(array $array)
+	public function add(array $array)
 	{
-		if(!isset($array['type'])) {
-			$type = 'text';
-		} else {
-			$type = $array['type'];
-		}
-
-		unset($array['type']);
-		$array['baseUrl'] = $this->_baseUrl;
+		if(isset($array['value']))
+		{
+			$array['baseUrl'] = $this->_baseUrl;
 		
-		$class = "\\Table\\Column\\".ucfirst($type);
-
-		if(isset($array['name']) && isset($array['header'])) {
-			$this->_columns[$array['name']] = new $class($array);
-		} else {
-			$this->_columns['action'.$this->_actionCount++] = new $class($array);
+			$this->_columns[] = new \Table\Cell($array);
 		}
-
-
-		return $this;
-	}
-
-	/**
-	 * @param array $array
-	 * @return Table
-	 */
-	public function addColumns(array $array)
-	{
-		foreach($array as $name => $config) {
-			$config['name'] = $name;
-
-			$this->addColumn($config);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function columns()
-	{
-		$_columns = $this->_columns;
-
-		foreach($_columns as $key => $val) {
-			if(stristr($key, 'action')) {
-				unset($_columns[$key]);
+		else
+		{
+			foreach($array as $column)
+			{
+				$this->add($column);
 			}
 		}
-
-		return $_columns;
+		
+		return $this;
 	}
 
-	/**
-	 * @param array $config
-	 * @return Table
-	 */
-	public function registerAdd(array $config)
+	public function attr($attr, $value)
 	{
-		if(!isset($config['classes'])) {
-			$config['classes'] = array();
+		if($attr == 'class' && is_array($value))
+		{
+			$value = join(' ', $value);
 		}
 		
-		$this->_add = $config;
-
+		$this->_attr[$attr] = $value;
+		
 		return $this;
 	}
 
@@ -218,7 +174,13 @@ class Table {
 	 */
 	public function render()
 	{
-		 require __DIR__.'/views/'.$this->_type.'.php';
+		$tbl_attr = '';
+		
+		foreach($this->_attr as $attr => $val) {
+			$tbl_attr .= $attr.'="'.$val.'" ';	
+		}
+		
+		require __DIR__.'/views/'.$this->_type.'.php';
 	}
 
 	/**
@@ -243,25 +205,14 @@ class Table {
 	 * @param  $sourceData
 	 * @return Table
 	 */
-	public function setDataSource($sourceType, $sourceData)
+	public function setDataSource($data, $type = 'dom')
 	{
-		if(!in_array($sourceType, self::$_types)) {
+		if(!in_array($type, self::$_types)) {
 			throw new Exception('Invalid Data Source Type Specified');
 		}
 
-		$this->_type = $sourceType;
-		$this->_data = $sourceData;
-
-		return $this;
-	}
-
-	/**
-	 * @param  $name
-	 * @return Table
-	 */
-	public function setName($name)
-	{
-		$this->_name = $name;
+		$this->_type = $type;
+		$this->_data = $data;
 
 		return $this;
 	}
