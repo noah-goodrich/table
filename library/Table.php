@@ -174,7 +174,7 @@ class Table {
 	{
 		$args = json_encode($args);
 		
-		return '<script language="Javascript" type="javascript">$(document).ready(function() { $(\'#'.$id.'\').dataTable('.$args.'); });</script>';
+		return '<script type="text/javascript" language="Javascript">$(document).ready(function() { $(\'#'.$id.'\').dataTable('.$args.'); });</script>';
 	}
 
 	/**
