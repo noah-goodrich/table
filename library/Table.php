@@ -170,11 +170,18 @@ class Table {
 	 * @param $id
 	 * @param $args
 	 */
-	public function js($id = 'table', array $args = array())
+	public function js(array $args = array())
 	{
 		$args = json_encode($args);
 		
-		return '<script type="text/javascript" language="Javascript">$(document).ready(function() { $(\'#'.$id.'\').dataTable('.$args.'); });</script>';
+		return '<script
+					type="text/javascript"
+					language="Javascript"
+				>
+					$(document).ready(function() {
+						$(\'#'.$this->_attr['id'].'\').dataTable('.$args.');
+					});
+				</script>';
 	}
 
 	/**
