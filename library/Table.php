@@ -29,15 +29,11 @@ class Table {
 		'id' => null
 	);
 	
-	protected $_baseUrl;
-
 	protected $_columns = array();
 
 	protected $_data;
 
 	protected $_name;
-
-	protected $_actionCount = 0;
 
 	protected $_type;
 
@@ -139,7 +135,7 @@ class Table {
 	{
 		if(isset($array['value']))
 		{
-			$array['baseUrl'] = $this->_baseUrl;
+			$array['valObj'] = $this->_valueObj;
 		
 			$this->_columns[] = new \Table\Cell($array);
 		}

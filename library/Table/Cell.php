@@ -12,7 +12,7 @@ use Table\Value as Value;
 
 class Cell {
 
-	protected $_baseUrl;
+	protected $_attr;
 	
 	protected $_valueObj;
 
@@ -34,8 +34,8 @@ class Cell {
 				case 'header':
 					$this->_header = $v;
 					break;
-				case 'baseUrl':
-					$this->_baseUrl = $v;
+				case 'attr':
+					$this->_attr = $v;
 					break;
 			}
 		}

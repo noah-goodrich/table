@@ -23,7 +23,21 @@ $table->add(
 		)			
 	)
 	->setDataSource($rows);
-	
-echo $table->render();
 
-echo $table->js();
+?>
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="datatables.css" />
+	<link rel="stylesheet" type="text/css" href="datatables_jui.css" />
+</head>
+<body>
+	<? echo $table->render(); ?>
+</body>
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="datatables.js"></script>
+	
+	<? echo $table->js(); ?>
+	
+</html>
