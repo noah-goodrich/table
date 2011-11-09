@@ -8,8 +8,6 @@
 
 namespace Table;
 
-use Table\Value as Value;
-
 class Cell {
 
 	protected $_attr;
@@ -24,8 +22,6 @@ class Cell {
 
 	public function __construct(array $config)
 	{
-		$this->_valueObj = new Value;
-		
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'value':

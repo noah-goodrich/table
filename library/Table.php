@@ -6,6 +6,8 @@
  * 
 */
 
+use Table\Value as Value;
+
 class Table {
 
 	protected static $_types = array(
@@ -36,7 +38,9 @@ class Table {
 	protected $_name;
 
 	protected $_type;
-
+	
+	protected $_valueObj;
+	
 		/**
 	 * @param  $file
 	 * @return bool
@@ -111,6 +115,8 @@ class Table {
 
 	public function __construct(array $config = array())
 	{
+		$this->_valueObj = new Value;
+		
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'type':
