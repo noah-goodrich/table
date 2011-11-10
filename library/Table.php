@@ -6,6 +6,8 @@
  * 
 */
 
+use Table\Value as Value;
+
 class Table {
 
 	protected static $_types = array(
@@ -113,6 +115,8 @@ class Table {
 
 	public function __construct(array $config = array())
 	{
+		$this->_value = new Value;
+		
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'type':
@@ -137,7 +141,7 @@ class Table {
 	{
 		if(isset($array['value']))
 		{
-			$array['valueObj'] = $this->_value;
+			$array['object'] = $this->_value;
 		
 			$this->_columns[] = new \Table\Cell($array);
 		}

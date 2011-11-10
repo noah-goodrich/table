@@ -8,13 +8,11 @@
 
 namespace Table;
 
-use Table\Value as Value;
-
 class Cell {
 
 	protected $_attr;
 	
-	protected $_valueObj;
+	protected $_object;
 
 	protected $_value;
 
@@ -24,8 +22,6 @@ class Cell {
 
 	public function __construct(array $config)
 	{
-		$this->_valueObj = new Value;
-		
 		foreach($config as $k => $v) {
 			switch($k) {
 				case 'value':
@@ -37,6 +33,9 @@ class Cell {
 				case 'attr':
 					$this->_attr = $v;
 					break;
+				case 'object':
+					$this->_object = $v;
+					break;
 			}
 		}
 	}
@@ -47,7 +46,7 @@ class Cell {
 	 */
 	public function value($object)
 	{
-		$meth = $this->_valueObj;
+		$meth = $this->_object;
 
 		return $meth($this->_value, $object);
 	}
@@ -57,7 +56,7 @@ class Cell {
 	 */
 	public function header()
 	{
-		$meth = $this->_valueObj;
+		$meth = $this->_object;
 
 		return $meth($this->_header, func_get_args());
 	}
