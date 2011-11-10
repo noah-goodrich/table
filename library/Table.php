@@ -36,7 +36,9 @@ class Table {
 	protected $_name;
 
 	protected $_type;
-
+	
+	protected $_value;
+	
 		/**
 	 * @param  $file
 	 * @return bool
@@ -135,7 +137,7 @@ class Table {
 	{
 		if(isset($array['value']))
 		{
-			$array['valObj'] = $this->_valueObj;
+			$array['valueObj'] = $this->_value;
 		
 			$this->_columns[] = new \Table\Cell($array);
 		}
