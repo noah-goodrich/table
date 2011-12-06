@@ -1,13 +1,13 @@
 <?php
-/** 
+/**
  * @author noah
  * @date 3/7/11
  * @brief
- * 
+ *
  */
  ?>
 
-<table <?= $tbl_attr ?>>
+<table <?= $this->attr(); ?>>
 	<thead>
 	<tr>
 	<? foreach($this->_columns as $column): ?>
@@ -17,7 +17,7 @@
 	</thead>
 	<tbody>
 	<? foreach($this->_data as $tuple): ?>
-	<tr>
+	<tr <?= $this->rowAttr(); ?>>
 	<? foreach($this->_columns as $column): ?>
 		<?= $column->render($tuple) ?>
 	<? endforeach; ?>

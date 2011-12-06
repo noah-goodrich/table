@@ -1,36 +1,31 @@
 <?php
-/** 
+/**
  * @author noah
  * @date 3/2/11
  * @brief
- * 
+ *
 */
 
 use Table\Value as Value;
 
 class Table {
 
-	protected static $_types = array(
-		'ajax',
-		'dom'
-	);
-
 	protected static $_namespaces = array();
 
 	protected $_actions = array();
 
 	protected $_add = array();
-	
+
 	protected $_attr = array(
 		'class' => 'display',
 		'id' => 'table'
 	);
-	
+
 	protected $_rowAttr = array(
 		'class' => null,
 		'id' => null
 	);
-	
+
 	protected $_columns = array();
 
 	protected $_data;
@@ -38,9 +33,9 @@ class Table {
 	protected $_name;
 
 	protected $_type;
-	
+
 	protected $_value;
-	
+
 		/**
 	 * @param  $file
 	 * @return bool
@@ -59,7 +54,7 @@ class Table {
  		if(!count(self::$_namespaces)) {
 			self::registerNamespace('Table', __DIR__.'/Table/');
 		}
-		
+
         $parts = explode("\\", $class);
 
         if(isset(self::$_namespaces[$parts[0]])) {
@@ -116,11 +111,11 @@ class Table {
 	public function __construct(array $config = array())
 	{
 		$this->_value = new Value;
-		
+
 		foreach($config as $k => $v) {
 			switch($k) {
-				case 'type':
-					$this->setDataSource($config['data'], $v);
+				case 'data':
+					$this->setDataSource($config['data']);
 					break;
 				case 'id':
 					$this->attr('id', $v);
@@ -128,9 +123,15 @@ class Table {
 				case 'columns':
 					$this->add($v);
 					break;
+				case 'attr':
+					foreach($v as $key => $val)
+					{
+						$this->attr($key, $val);
+					}
+					break;
 			}
 		}
-		
+
 	}
 
 	/**
@@ -142,7 +143,7 @@ class Table {
 		if(isset($array['value']))
 		{
 			$array['object'] = $this->_value;
-		
+
 			$this->_columns[] = new \Table\Cell($array);
 		}
 		else
@@ -152,22 +153,27 @@ class Table {
 				$this->add($column);
 			}
 		}
-		
+
 		return $this;
 	}
 
-	public function attr($attr, $value)
+	public function attr($attr = null, $value = null)
 	{
-		if($attr == 'class' && is_array($value))
-		{
-			$value = join(' ', $value);
+		if(is_null($attr)) {
+			$_attr = '';
+			$meth = $this->_value;
+
+			foreach($this->_attr as $attr => $val) {
+				$_attr .= $attr.'="'.$meth($val).'" ';
+			}
+
+			return $_attr;
+		} else {
+			$this->_attr[$attr] = $value;
+			return $this;
 		}
-		
-		$this->_attr[$attr] = $value;
-		
-		return $this;
 	}
-	
+
 	/**
 	 * @param $id
 	 * @param $args
@@ -175,7 +181,7 @@ class Table {
 	public function js(array $args = array())
 	{
 		$args = json_encode($args);
-		
+
 		return '<script
 					type="text/javascript"
 					language="Javascript"
@@ -186,18 +192,35 @@ class Table {
 				</script>';
 	}
 
+	public function rowAttr($attr = null, $value = null)
+	{
+		if(is_null($attr)) {
+			$_attr = '';
+			$meth = $this->_value;
+
+			foreach($this->_rowAttr as $attr => $val) {
+				$_attr .= $attr.'="'.$meth($val).'" ';
+			}
+
+			return $_attr;
+		} else {
+			$this->_rowAttr[$attr] = $value;
+			return $this;
+		}
+
+	}
+
 	/**
 	 * @return void
 	 */
-	public function render()
+	public function render($json = false)
 	{
-		$tbl_attr = '';
-		
-		foreach($this->_attr as $attr => $val) {
-			$tbl_attr .= $attr.'="'.$val.'" ';	
+		if($json === false) {
+			require __DIR__.'/views/table.php';
 		}
-		
-		require __DIR__.'/views/'.$this->_type.'.php';
+		else {
+			require __DIR__.'/view/json.php';
+		}
 	}
 
 	/**
@@ -206,13 +229,8 @@ class Table {
 	 * @param  $sourceData
 	 * @return Table
 	 */
-	public function setDataSource($data, $type = 'dom')
+	public function setDataSource($data)
 	{
-		if(!in_array($type, self::$_types)) {
-			throw new Exception('Invalid Data Source Type Specified');
-		}
-
-		$this->_type = $type;
 		$this->_data = $data;
 
 		return $this;

@@ -1,9 +1,9 @@
 <?php
-/** 
+/**
  * @author noah
  * @date 3/8/11
  * @brief
- * 
+ *
 */
 
 namespace Table;
@@ -11,14 +11,12 @@ namespace Table;
 class Cell {
 
 	protected $_attr;
-	
+
 	protected $_object;
 
 	protected $_value;
 
 	protected $_header;
-
-	protected $_classes;
 
 	public function __construct(array $config)
 	{
@@ -67,6 +65,14 @@ class Cell {
 	 */
 	public function render($object)
 	{
-		return '<td>'.$this->value($object).'</td>';
+		$_attr  = '';
+
+		$meth = $this->_object;
+
+		foreach($this->_attr as $attr => $value) {
+			$attr .=  $attr.'="'.$meth($value, $object).'" ';
+		}
+
+		return '<td '.$attr.'>'.$this->value($object).'</td>';
 	}
 }

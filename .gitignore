@@ -1,2 +1,3 @@
 *.idea
 *.komodo*
+/nbproject/private/
