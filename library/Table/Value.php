@@ -17,7 +17,7 @@ class Value {
 	 */
 	public function __invoke($determiner, $obj)
 	{
-		if (empty($determiner) || !is_callable($determiner)) {
+		if (empty($determiner) || ! $determiner instanceof Closure) {
 			return $determiner;
 		}
 
