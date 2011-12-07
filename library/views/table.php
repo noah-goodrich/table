@@ -17,7 +17,7 @@
 	</thead>
 	<tbody>
 	<? foreach($this->_data as $tuple): ?>
-	<tr <?= $this->rowAttr(); ?>>
+	<tr <?= $this->rowAttr($tuple); ?>>
 	<? foreach($this->_columns as $column): ?>
 		<?= $column->render($tuple) ?>
 	<? endforeach; ?>
