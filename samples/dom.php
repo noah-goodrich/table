@@ -11,7 +11,7 @@ spl_autoload_register(array('Table', 'autoload'));
 
 $db = new PDO('mysql:dbname=world;host=localhost', 'table', 'table');
 
-$rows = $db->query('select * from City', PDO::FETCH_OBJ);
+$rows = $db->query('select * from City', PDO::FETCH_OBJ)->fetchAll();
 
 $table = new Table;
 
@@ -20,7 +20,7 @@ $table->add(
 			array('header' => 'ID', 'value' => function($o) { return $o->ID;}),
 			array('header' => function() { return 'Name'; }, 'value' => function($o) {return $o->Name; }),
 			array('value' => 'Test Value')
-		)			
+		)
 	)
 	->setDataSource($rows);
 
@@ -37,7 +37,7 @@ $table->add(
 
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="datatables.js"></script>
-	
+
 	<? echo $table->js(); ?>
-	
+
 </html>

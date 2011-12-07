@@ -1,9 +1,9 @@
 <?php
-/** 
+/**
  * @author noah
  * @date 3/8/11
  * @brief
- * 
+ *
 */
 
 namespace Table;
@@ -17,7 +17,7 @@ class Value {
 	 */
 	public function __invoke($determiner, $obj)
 	{
-		if (empty($determiner) || ! $determiner instanceof Closure) {
+		if (empty($determiner) || (!is_object($determiner) && !is_callable($determiner))) {
 			return $determiner;
 		}
 

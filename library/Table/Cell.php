@@ -10,7 +10,7 @@ namespace Table;
 
 class Cell {
 
-	protected $_attr;
+	protected $_attr = array();
 
 	protected $_object;
 
@@ -70,9 +70,9 @@ class Cell {
 		$meth = $this->_object;
 
 		foreach($this->_attr as $attr => $value) {
-			$attr .=  $attr.'="'.$meth($value, $object).'" ';
+			$_attr .=  $_attr.'="'.$meth($value, $object).'" ';
 		}
 
-		return '<td '.$attr.'>'.$this->value($object).'</td>';
+		return '<td '.$_attr.'>'.$this->value($object).'</td>';
 	}
 }
