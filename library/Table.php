@@ -164,7 +164,7 @@ class Table {
 			$meth = $this->_value;
 
 			foreach($this->_attr as $attr => $val) {
-				$_attr .= $attr.'="'.$meth($val).'" ';
+				$_attr .= $attr.'="'.$meth($val, $this).'" ';
 			}
 
 			return $_attr;
@@ -194,20 +194,18 @@ class Table {
 
 	public function rowAttr($attr = null, $value = null)
 	{
-		if(is_null($attr)) {
-			$_attr = '';
-			$meth = $this->_value;
-
-			foreach($this->_rowAttr as $attr => $val) {
-				$_attr .= $attr.'="'.$meth($val).'" ';
-			}
-
-			return $_attr;
-		} else {
-			$this->_rowAttr[$attr] = $value;
-			return $this;
+		$this->_rowAttr[$attr] = $value;
+		return $this;
+	}
+	
+	public function getRowAttr($obj)
+	{
+		$_attr = '';
+		$meth = $this->_value;
+		
+		foreach ($this->_rowAttr as $attr => $val) {
+			$_attr .= $attr.'="'.$meth($val, $obj).'" ';
 		}
-
 	}
 
 	/**
