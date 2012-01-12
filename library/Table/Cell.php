@@ -70,7 +70,7 @@ class Cell {
 		$meth = $this->_object;
 
 		foreach($this->_attr as $attr => $value) {
-			$_attr .=  $_attr.'="'.$meth($value, $object).'" ';
+			$_attr .=  $attr.'="'.$meth($value, $object).'" ';
 		}
 
 		return '<td '.$_attr.'>'.$this->value($object).'</td>';
