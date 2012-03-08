@@ -214,10 +214,11 @@ class Table {
 	public function render($json = false)
 	{
 		if($json === false) {
-			require __DIR__.'/views/table.php';
+			return require __DIR__.'/views/table.php';
 		}
 		else {
-			require __DIR__.'/view/json.php';
+			$json = require __DIR__.'/views/json.php';
+			return $json;
 		}
 	}
 

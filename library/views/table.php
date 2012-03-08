@@ -5,23 +5,31 @@
  * @brief
  *
  */
- ?>
+ $str = null;
 
-<table <?= $this->attr(); ?>>
-	<thead>
-	<tr>
-	<? foreach($this->_columns as $column): ?>
-		<th><?= $column->header() ?></th>
-	<? endforeach; ?>
-	</tr>
-	</thead>
-	<tbody>
-	<? foreach($this->_data as $tuple): ?>
-	<tr <?= $this->getRowAttr($tuple); ?>>
-	<? foreach($this->_columns as $column): ?>
-		<?= $column->render($tuple) ?>
-	<? endforeach; ?>
-	</tr>
-	<? endforeach; ?>
-	</tbody>
-</table>
+$str.= '<table '.$this->attr().'>'
+	 . '<thead>'
+	 . '<tr>';
+
+foreach($this->_columns as $column) {
+	$str.= '<th>'.$column->header().'</th>';
+}
+	
+$str.= '</tr>'
+	 . '</thead>'
+	 . '<tbody>';
+
+ foreach($this->_data as $tuple) {
+	 $str.= '<tr '.$this->getRowAttr($tuple).'>';
+
+	 foreach ($this->_columns as $column) {
+		 $str.= $column->render($tuple);
+	 }
+	 
+	 $str.= '</tr>';
+}
+
+	$str.= '</tbody>'
+		 . '</table>';
+
+return $str;

@@ -10,11 +10,13 @@ $array = array();
 foreach($this->_data as $tuple) {
 	$row = array();
 
-	foreach($this->_columns as $cell) {
+	foreach($this->_columns as $col) {
 		$row[] = $col->value($tuple);
 	}
 
 	$array[] = $row;
 }
 
-echo json_encode($array);
+return $array;
+
+return json_encode($array);
