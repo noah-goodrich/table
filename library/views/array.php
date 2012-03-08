@@ -18,5 +18,3 @@ foreach($this->_data as $tuple) {
 }
 
 return $array;
-
-return json_encode($array);

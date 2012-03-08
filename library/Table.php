@@ -211,15 +211,13 @@ class Table {
 	/**
 	 * @return void
 	 */
-	public function render($json = false)
+	public function render($type = null)
 	{
-		if($json === false) {
-			return require __DIR__.'/views/table.php';
+		if ($type === 'array') {
+			return require __DIR__.'/views/array.php';
 		}
-		else {
-			$json = require __DIR__.'/views/json.php';
-			return $json;
-		}
+		
+		return require __DIR__.'/views/html.php';
 	}
 
 	/**
