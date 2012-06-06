@@ -197,12 +197,12 @@ class Table {
 		$this->_rowAttr[$attr] = $value;
 		return $this;
 	}
-	
+
 	public function getRowAttr($obj)
 	{
 		$_attr = '';
 		$meth = $this->_value;
-		
+
 		foreach ($this->_rowAttr as $attr => $val) {
 			$_attr .= $attr.'="'.$meth($val, $obj).'" ';
 		}
@@ -217,7 +217,7 @@ class Table {
 			require __DIR__.'/views/table.php';
 		}
 		else {
-			require __DIR__.'/view/json.php';
+			require __DIR__.'/views/json.php';
 		}
 	}
 
