@@ -206,6 +206,8 @@ class Table {
 		foreach ($this->_rowAttr as $attr => $val) {
 			$_attr .= $attr.'="'.$meth($val, $obj).'" ';
 		}
+
+		return $_attr;
 	}
 
 	/**
